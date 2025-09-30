@@ -3,7 +3,7 @@ version: '3.8'
 services:
   mysql:
     image: mysql:5.7
-    container_name: mysql1
+    container_name: mysqlJenks
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: etudiants_db
@@ -19,7 +19,7 @@ services:
  
   php:
     image: php:8.2-fpm
-    container_name: php1
+    container_name: phpJenks
     volumes:
       - ./app/php:/var/www/html
     networks:
@@ -30,7 +30,7 @@ services:
 
   nginx:
     image: ubuntumathiselly
-    container_name: nginx1
+    container_name: nginxJenks
     ports:
       - "5080:80"
       - "5000:443"
