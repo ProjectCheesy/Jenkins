@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: etudiants_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - ./app/init.sql:/docker-entrypoint-initdb.d
+    networks:
+      - app-net
+      - mynet
+    security_opt:
+      - seccomp:unconfined
+ 
+  php:
+    image: php:8.2-fpm
+    container_name: php1
+    volumes:
+      - ./app/php:/var/www/html
+    networks:
+      - app-net
+      - mynet
+    security_opt:
+      - seccomp:unconfined
+
+  nginx:
+    image: ubuntumathiselly
+    container_name: nginx1
+    ports:
+      - "5080:80"
+      - "5000:443"
+    volumes:
+      - ./app/php:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"  # Limite CPU à 250m
+          memory: 400M
+    depends_on:
+      - mysql
+      - php
+    networks:
+      - app-net
+      - mynet
+    security_opt:
+      - seccomp:unconfined
+
+networks:
+  mynet:
+    external: true
+  app-net:
+    driver: bridge
+
