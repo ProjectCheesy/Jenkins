@@ -12,8 +12,7 @@ services:
     volumes:
       - ./app/init.sql/:/docker-entrypoint-initdb.d
     networks:
-      - app-net
-      - mynet
+      - tp1-3
     security_opt:
       - seccomp:unconfined
  
@@ -27,8 +26,7 @@ services:
       - ./app/php:/var/www/html
       - ./app/php-config:/usr/local/etc/php
     networks:
-      - app-net
-      - mynet
+      - tp1-3
     security_opt:
       - seccomp:unconfined
     expose:
@@ -52,14 +50,15 @@ services:
       - mysql
       - php
     networks:
-      - app-net
-      - mynet
+      - tp1-3
     security_opt:
       - seccomp:unconfined
 
 networks:
-  mynet:
+  tp1-3:
     external: true
-  app-net:
-    driver: bridge
+  #mynet:
+        #external: true
+        #app-net:
+        #driver: bridge
 
