@@ -1,5 +1,5 @@
 <?php
-$host = 'mysql';
+$host = 'mysql1';
 $db   = 'etudiants_db';
 $user = 'user';
 $pass = 'password';
@@ -22,4 +22,4 @@ try {
 } catch (\PDOException $e) {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
-
+?>
